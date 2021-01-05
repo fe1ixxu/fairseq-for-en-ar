@@ -1,4 +1,4 @@
-#### This repo is used for En-Ar translation ensemble models compsed by GigaBERT and transformers. Commands (`preprocess*, generate*, train*`) are listed above.
+#### This repo is used for En-De translation ensemble models compsed by pre-trained Language models and transformers.
 
 <p align="center">
   <img src="docs/fairseq_logo.png" width="150">
