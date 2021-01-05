@@ -33,16 +33,17 @@ class Dictionary(object):
         self.symbols = []
         self.count = []
         self.indices = {}
-        self.pad_index = self.add_symbol(pad)
-        self.unk_index = self.add_symbol(unk)
-        self.bos_index = self.add_symbol(bos)
-        self.mask_index = self.add_symbol(mask)
-        self.eos_index = self.add_symbol(eos)
+        self.pad_index = 0 #self.add_symbol(pad)
+        self.unk_index = 100 #self.add_symbol(unk)
+        self.bos_index = 101 #self.add_symbol(bos)
+        self.eos_index = 102 #self.add_symbol(eos)
+        self.mask_index = 103 #self.add_symbol(mask)
+
         
         if extra_special_symbols:
             for s in extra_special_symbols:
                 self.add_symbol(s)
-        self.nspecial = len(self.symbols)
+        self.nspecial = len([bos, unk, pad, eos, mask]) #len(self.symbols)
 
     def __eq__(self, other):
         return self.indices == other.indices

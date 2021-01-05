@@ -34,7 +34,7 @@ from transformers import AutoModel
 
 DEFAULT_MAX_SOURCE_POSITIONS = 1024
 DEFAULT_MAX_TARGET_POSITIONS = 1024
-Pretrained_model = AutoModel.from_pretrained("lanwuwei/GigaBERT-v4-Arabic-and-English")
+Pretrained_model = AutoModel.from_pretrained("bert-base-multilingual-cased")
 Pretrained_model.eval()
 
 
@@ -376,16 +376,16 @@ class TransformerEncoder(FairseqEncoder):
             with torch.no_grad():
                 device = src_tokens.device
                 Pretrained_model.to(device)
-                bos = 2*torch.ones(src_tokens.shape[0], 1, dtype=torch.long, device=device)
+                bos = 101 * torch.ones(src_tokens.shape[0], 1, dtype=torch.long, device=device) #[CLS] = 101
                 src_tokens = torch.cat((bos, src_tokens), dim=1)
                 token_ids = torch.zeros(src_tokens.shape, dtype=torch.long, device=device)
                 token_attention = torch.ones(src_tokens.shape, dtype=torch.long, device=device)
-                token_attention = torch.where(src_tokens==0, token_ids, token_attention)
+                token_attention = torch.where(src_tokens==0, token_ids, token_attention)  # [PAD] = 0
                 # token_embedding = self.embed_tokens(src_tokens)  # original embedding
                 token_embedding = Pretrained_model(src_tokens, token_type_ids=token_ids, attention_mask=token_attention)[0]
                 token_embedding = token_embedding[:, 1:, :]
                 src_tokens = src_tokens[:, 1:]
-
+        print(src_tokens)
 
         x = embed = self.embed_scale * token_embedding
         if self.embed_positions is not None:

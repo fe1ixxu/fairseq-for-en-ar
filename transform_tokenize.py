@@ -1,13 +1,13 @@
 from transformers import AutoTokenizer, AutoModel
 from sacremoses import MosesTokenizer, MosesDetokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("lanwuwei/GigaBERT-v4-Arabic-and-English")
-fo = open("/export/c12/haoranxu/fairseq/arabic_bitext/data_temp/train.32k.ar", encoding="utf-8")
-fw = open("/export/c12/haoranxu/fairseq/arabic_bitext/data_transbpe/train.32k.ar", "w", encoding="utf-8")
-detok = MosesDetokenizer("en")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
+fo = open("/export/c12/haoranxu/fairseq/wmt14en-de/debpe/train.de", encoding="utf-8")
+fw = open("/export/c12/haoranxu/fairseq/wmt14en-de/bertdata/train.de", "w", encoding="utf-8")
+detok = MosesDetokenizer("de")
 line = fo.readline()
 while(line):
-    # line = detok.detokenize(line.split()) # if en, do not need if ar
+    line = detok.detokenize(line.split()) 
     toks = tokenizer.tokenize(line)
     toks = " ".join(toks)
     fw.writelines([toks, "\n"])
