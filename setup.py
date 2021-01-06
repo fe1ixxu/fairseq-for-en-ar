@@ -156,6 +156,7 @@ def do_setup(package_data):
             "regex",
             "sacrebleu>=1.4.12",
             "torch",
+            "transformers",
             "tqdm",
         ],
         dependency_links=dependency_links,
